@@ -1,0 +1,31 @@
+Task Name,Phase,Status,Priority,Estimated Time,Start Day
+Define project scope,Phase 0 – Planning,Not Started,High,1 hr,Day 1
+Create README,Phase 0 – Planning,Not Started,Medium,1 hr,Day 1
+Design system architecture,Phase 0 – Planning,Not Started,High,1.5 hr,Day 1
+Plan API contracts,Phase 0 – Planning,Not Started,High,2 hr,Day 1
+Setup Node + Express,Phase 1 – Backend,Not Started,High,1 hr,Day 2
+Connect MongoDB,Phase 1 – Backend,Not Started,High,1 hr,Day 2
+Create Book schema,Phase 1 – Backend,Not Started,High,1 hr,Day 2
+Create Admin schema,Phase 1 – Backend,Not Started,Medium,1 hr,Day 3
+Implement Book CRUD APIs,Phase 1 – Backend,Not Started,High,3 hr,Day 3
+Test APIs with Postman,Phase 1 – Backend,Not Started,Medium,1 hr,Day 3
+Issue book logic,Phase 2 – Inventory,Not Started,High,2 hr,Day 4
+Return book logic,Phase 2 – Inventory,Not Started,High,2 hr,Day 4
+Atomic stock updates,Phase 2 – Inventory,Not Started,High,1 hr,Day 4
+Integrate Socket.IO backend,Phase 3 – Realtime Backend,Not Started,High,2 hr,Day 5
+Emit inventory events,Phase 3 – Realtime Backend,Not Started,High,1.5 hr,Day 5
+Test realtime events,Phase 3 – Realtime Backend,Not Started,Medium,1 hr,Day 5
+Setup React app,Phase 4 – Frontend,Not Started,High,1 hr,Day 6
+Build catalog page,Phase 4 – Frontend,Not Started,High,2 hr,Day 6
+Book details page,Phase 4 – Frontend,Not Started,Medium,2 hr,Day 7
+Reusable UI components,Phase 4 – Frontend,Not Started,Medium,2 hr,Day 7
+API integration,Phase 4 – Frontend,Not Started,High,2 hr,Day 7
+Setup Socket.IO client,Phase 5 – Realtime Frontend,Not Started,High,1 hr,Day 8
+Live UI updates,Phase 5 – Realtime Frontend,Not Started,High,2 hr,Day 8
+JWT authentication,Phase 6 – Admin,Not Started,High,2 hr,Day 9
+Admin dashboard UI,Phase 6 – Admin,Not Started,High,2 hr,Day 9
+Book management,Phase 6 – Admin,Not Started,High,2 hr,Day 9
+Add loading states,Phase 7 – Testing,Not Started,Medium,1 hr,Day 10
+Error handling,Phase 7 – Testing,Not Started,High,1 hr,Day 10
+Bug fixing,Phase 7 – Testing,Not Started,High,2 hr,Day 10
+Update documentation,Phase 7 – Testing,Not Started,Medium,1 hr,Day 10
