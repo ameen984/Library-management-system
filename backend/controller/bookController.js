@@ -1,4 +1,6 @@
 import bookModel from "../models/bookSchema.js";
+import { emitSocketEvent } from "../sockets/socketEmitter.js";
+import { SOCKET_EVENTS } from "../sockets/socketEvents.js";
 
 export const addBook = async (req, res) => {
   try {
@@ -11,6 +13,12 @@ export const addBook = async (req, res) => {
       totalCopies,
       availableCopies: totalCopies,
       description,
+    });
+
+   
+
+     emitSocketEvent(req, SOCKET_EVENTS.BOOK_ADDED, {
+      book: addedBook,
     });
 
     return res.status(201).json({
@@ -72,16 +80,22 @@ export const updateBook = async (req, res) => {
       availableCopies = totalCopies - issuedCopies;
     }
 
-    const updatedbook = await bookModel.findByIdAndUpdate(
+    const updatedBook = await bookModel.findByIdAndUpdate(
       id,
       { title, author, category, totalCopies, availableCopies, description },
       { new: true }
     );
 
+  emitSocketEvent(req, SOCKET_EVENTS.BOOK_UPDATED, {
+      bookId: updatedBook._id,
+      updatedBook,
+    });
+
+
     return res.status(200).json({
       message: "Book updated Successfully",
       success: true,
-      result: updatedbook,
+      result: updatedBook,
     });
   } catch (error) {
     return res.status(500).json({
@@ -123,7 +137,10 @@ export const deleteBook = async (req, res) => {
         message: "Book not found",
       });
     }
-
+   
+     emitSocketEvent(req, SOCKET_EVENTS.BOOK_DELETED, {
+      bookId: id,
+    });
     return res.status(200).json({
       success: true,
       message: "Book deleted successfully",
@@ -137,8 +154,6 @@ export const deleteBook = async (req, res) => {
     });
   }
 };
-
-import mongoose from "mongoose";
 
 export const returnBook = async (req, res) => {
   try {
@@ -161,6 +176,10 @@ export const returnBook = async (req, res) => {
       });
     }
 
+       emitSocketEvent(req, SOCKET_EVENTS.BOOK_AVAILABILITY_CHANGED, {
+      bookId: book._id,
+      availableCopies: book.availableCopies,
+    });
     return res.status(200).json({
       success: true,
       message: "Book returned successfully",
@@ -191,6 +210,10 @@ export const issueBook = async (req, res) => {
         message: "Book not available or not found",
       });
     }
+       emitSocketEvent(req, SOCKET_EVENTS.BOOK_AVAILABILITY_CHANGED, {
+      bookId: book._id,
+      availableCopies: book.availableCopies,
+    });
 
     return res.status(200).json({
       success: true,
