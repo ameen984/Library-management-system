@@ -1,36 +1,49 @@
 import bookModel from "../models/bookSchema.js";
 import { emitSocketEvent } from "../sockets/socketEmitter.js";
+import cloudinary from "../config/cloudinary.js";
 import { SOCKET_EVENTS } from "../sockets/socketEvents.js";
 
 export const addBook = async (req, res) => {
-  try {
+
+  try 
+  {
+    console.log("FILE:", req.file);   // 👈 ADD HERE
+    console.log("BODY:", req.body);
     const { title, author, category, totalCopies, description } = req.body;
 
-    const addedBook = await bookModel.create({
+    let image = "";
+
+    if (req.file) {
+      const uploadResult = await cloudinary.uploader.upload(
+        `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+        { folder: "books" }
+      );
+
+      image = uploadResult.secure_url;
+    }
+
+    const book = await bookModel.create({
       title,
       author,
       category,
       totalCopies,
       availableCopies: totalCopies,
       description,
+      image,
     });
+    emitSocketEvent(req, SOCKET_EVENTS.BOOK_ADDED, {
+  book,
+});
 
-   
-
-     emitSocketEvent(req, SOCKET_EVENTS.BOOK_ADDED, {
-      book: addedBook,
-    });
 
     return res.status(201).json({
-      message: "Book Added Successfully",
       success: true,
-      result: addedBook,
+      result: book,
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Book Adding Failed",
       success: false,
-      result: error.message,
+      message: error.message,
     });
   }
 };

@@ -1,10 +1,10 @@
 import express from "express"
 import { addBook, allBooks, deleteBook, fetchBook, issueBook, returnBook, updateBook } from "../controller/bookController.js"
-
+import upload from "../middlewares/upload.js";
 
 const bookRouter=express.Router()
 
-bookRouter.post("/",addBook)
+bookRouter.post("/", upload.single("image"), addBook);
 bookRouter.get("/:id",fetchBook)
 bookRouter.get("/",allBooks)
 bookRouter.put("/:id",updateBook)
