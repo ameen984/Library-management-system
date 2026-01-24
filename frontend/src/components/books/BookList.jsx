@@ -1,36 +1,23 @@
+// import { useState } from "react";
 import { useGetBooksQuery } from "../../services/bookApi";
 import BookCard from "./BookCard";
 
-const normalize = (value = "") =>
-  value.toLowerCase().replace(/[\s-]/g, "");
 
-const BookList = ({ category = "", search = "" }) => {
-  const { data, isLoading, isError } = useGetBooksQuery();
+
+
+const BookList = ({search,category}) => {
+ 
+ const { data, isLoading, isError } = useGetBooksQuery({
+  category,
+  search,
+   limit: 10,  
+});
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError) return <p className="text-center mt-10 text-red-500">Error</p>;
 
-  let books = data?.result || [];
-
-  // 🏷️ CATEGORY FILTER (only if category exists)
-  if (category.trim() !== "") {
-    books = books.filter(
-      (book) =>
-        normalize(book.category) === normalize(category)
-    );
-  }
-
-  // 🔍 SEARCH FILTER (only if search exists)
-  if (search.trim() !== "") {
-    const text = search.toLowerCase();
-
-    books = books.filter(
-      (book) =>
-        book.title.toLowerCase().includes(text) ||
-        book.author.toLowerCase().includes(text)
-    );
-  }
-
+ 
+const books=data?.result ||[]
   return (
     <div className="grid grid-cols-5 gap-6 mt-10">
       {books.length ? (
